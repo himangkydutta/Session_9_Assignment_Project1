@@ -1,0 +1,118 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10">
+                <div class="form-wrap">
+                    <h1 custlighter="yellow" bgColor="navy">Add Movie</h1>
+                    <form #femp="ngForm" novalidate autocomplete="off" (ngSubmit)="AddMovieDet()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" [(ngModel)]="currentMovie.imageUrl" name="imageUrl" #refUrl="ngModel" 
+                            placeholder="Image URL i.e https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg"  maxlength="45"  required>
+                            <!-- Field Validation-->
+                            <div *ngIf="refUrl.errors && (refUrl.dirty || refUrl.touched)"  class="alert alert-danger" >
+                                <div [hidden]="!refUrl.errors.required">
+                                    Image Url Required
+                                </div>
+                                <!--Min length validation -->
+                                <div [hidden]="!refUrl.errors.maxlength">
+                                    Maximum characters is 45.
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="form-group">
+                            <input type="text" [(ngModel)]="currentMovie.name" name="name" class="form-control" placeholder="Enter the movie name" required
+                                #reffirst='ngModel' pattern="^[a-zA-Z]*$" maxlength="25" minlength="5">
+                            <div *ngIf="reffirst.errors && (reffirst.dirty || reffirst.touched)" class="alert alert-danger">
+                                <div [hidden]="!reffirst.errors.required">
+                                    Movie Name is required.
+                                </div>
+                                <!--Minimum validation -->
+                                <div [hidden]="!reffirst.errors.minlength">
+                                    Please enter atleast 5 characeters.
+                                </div>
+                                <!--Pattern validation -->
+                                <div [hidden]="!reffirst.errors.pattern">
+                                    Please enter alphabets.
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="form-group">
+                           <select class="txt-box" name="rating" [(ngModel)]="currentMovie.movieTitlList" class="form-control" #refrat='ngModel' required>
+                            <option [value]="currentMovie.movieTitlList" [disabled]="true">Rating</option>
+                            <option *ngFor="let rating of movieTitlList" [ngValue]="rating.title">
+                                {{rating.title}}
+                            </option>
+                            </select>
+                            <div *ngIf="refrat.errors && (refrat.dirty || refrat.touched)" class="alert alert-danger">
+                                <!--Field required validation -->
+                                <div [hidden]="!refrat.errors.required">
+                                    Rating is required.
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="form-group">
+                            <input type="text" [(ngModel)]="rating" name="currentMovie.releaseDate" id="releasedate" class="form-control" placeholder="Date is required(mm/dd/yyy)"
+                                required #refdate>
+                            <div *ngIf="refdate.errors && (refdate.dirty || refdate.touched)" class="alert alert-danger">
+                                <!--Field required validation -->
+                                <div [hidden]="!refdate.errors.required">
+                                    Release date  is required.
+                                </div>
+                            </div>
+                        </div><br>
+						<div class="form-group">
+                            <input type="text" [(ngModel)]="currentMovie.description" name="name" class="form-control" placeholder="Enter the description of the movie" required
+                                #refdesc='ngModel' pattern="^[a-zA-Z]*$" maxlength="25" minlength="5">
+                            <div *ngIf="refdesc.errors && (refdesc.dirty || refdesc.touched)" class="alert alert-danger">
+                                <!--Field required validation -->
+                                <div [hidden]="!refdesc.errors.required">
+                                    description is required.
+                                </div>
+                                <!--Minimum validation -->
+                                <div [hidden]="!refdesc.errors.minlength">
+                                    Please enter atleast 5 characeters.
+                                </div>
+                                <!--Pattern validation -->
+                                <div [hidden]="!refdesc.errors.pattern">
+                                    Please enter alphabets.
+                                </div>
+                            </div>
+                        </div><br>
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" [disabled]="femp.invalid">
+                    </form>
+                    <hr>
+                </div>
+                <div>
+                    <table *ngIf="movieList.length > 0" class="table">           
+                        <thead>
+                            <h1 custlighter="yellow" bgColor="navy">Movie List</h1>
+                            <tr>
+                                <th>Index</th>
+                                <th>Movie Name</th>
+                                <th>Movie Rating</th>
+                                <th>Release Year</th>
+                                <th>Description</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of movieList;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{ list.name }}</td>
+                                <!--Changing background color directives-->
+                                <td bgColor="navy">{{ list.title }}</td>
+                                <td>{{ list.releaseDate }}</td>
+                                <!--Changing color using directives-->
+                                <td custlighter="yellow" bgColor="navy">{{ list.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.col-xs-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+<hr/>
